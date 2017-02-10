@@ -51,6 +51,7 @@ repos=( opx-logging
 	opx-sdi-sys-vm
 	opx-pas
 	opx-tmpctl
+	opx-core
 	)
 
 if [ ! -z "$1" ] && [ "$1" != "all" ]; then
