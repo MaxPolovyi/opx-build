@@ -30,6 +30,7 @@ repos=( opx-logging
 	opx-sai-api
 	opx-sai-common-utils
 	opx-sai-common
+	opx-sai-xpliant
 	opx-sai-vm
 	opx-nas-common
 	opx-nas-linux
