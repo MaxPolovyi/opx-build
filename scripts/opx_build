@@ -54,8 +54,38 @@ repos=( opx-logging
 	opx-core
 	)
 
+repos_as7512_32x=(
+	opx-logging
+	opx-common-utils
+	opx-cps
+	opx-base-model
+	opx-db-sql
+	opx-sai-api
+	opx-sai-xpliant
+	opx-nas-common
+	opx-nas-linux
+	opx-nas-ndi-api
+	opx-nas-ndi
+	opx-nas-acl
+	opx-nas-interface
+	opx-nas-l2
+	opx-nas-l3
+	opx-nas-qos
+	opx-nas-daemon
+	opx-platform-config
+	opx-sdi-api
+	opx-sdi-sys-vm
+	opx-pas
+	opx-tmpctl
+	opx-core
+	)
+
 if [ ! -z "$1" ] && [ "$1" != "all" ]; then
-    repos=( "$@" )
+    if [ "$1" == "as7512" ]; then
+        repos=$repos_as7512_32x
+    else
+        repos=( "$@" )
+    fi
 fi
 
 # Use temporary output directory isolate the output of each build
