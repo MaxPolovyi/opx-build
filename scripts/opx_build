@@ -83,7 +83,7 @@ repos_as7512_32x=(
 
 if [ ! -z "$1" ] && [ "$1" != "all" ]; then
     if [ "$1" == "as7512" ]; then
-        repos=$repos_as7512_32x
+        repos=( $repos_as7512_32x )
     else
         repos=( "$@" )
     fi
