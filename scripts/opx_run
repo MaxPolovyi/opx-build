@@ -15,4 +15,9 @@
 # permissions and limitations under the License.
 #
 
-docker run --rm --privileged -i -t -e LOCAL_UID=$(id -u ${USER}) -e LOCAL_GID=$(id -g ${USER}) -v ${PWD}:/mnt docker-opx:latest "$@"
+docker run --rm --privileged \
+    -i -t \
+    -e LOCAL_UID=$(id -u ${USER}) \
+    -e LOCAL_GID=$(id -g ${USER}) \
+    -v $(readlink -f ../pkgs):/var/cache/pbuilder/result \
+    -v $(readlink -f ./):$(readlink -f ./) docker-opx:latest "$@"
