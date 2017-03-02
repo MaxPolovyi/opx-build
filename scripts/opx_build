@@ -22,62 +22,63 @@ DIST=$(lsb_release --codename --short)
 # Define list of repositories in dependency order.
 # 
 # TODO: read the debian/control files and compute the dependency graph.
-repos=( opx-logging
-	opx-common-utils
-	opx-cps
-	opx-base-model
-	opx-db-sql
-	opx-sai-api
-	opx-sai-common-utils
-	opx-sai-common
-	opx-sai-xpliant
-	opx-sai-vm
-	opx-nas-common
-	opx-nas-linux
-	opx-nas-ndi-api
-	opx-nas-ndi
-	opx-nas-acl
-	opx-nas-interface
-	opx-nas-l2
-	opx-nas-l3
-	opx-nas-qos
-	opx-nas-daemon
-	opx-platform-config
-	opx-sdi-api
-	opx-sdi-framework
-	opx-sdi-device-drivers
-	opx-sdi-sys
-	opx-sdi-sys-vm
-	opx-pas
-	opx-tmpctl
-	opx-core
-	)
+repos=( 
+	opx-logging
+    opx-common-utils
+    opx-cps
+    opx-base-model
+    opx-db-sql
+    opx-sai-api
+    opx-sai-common-utils
+    opx-sai-common
+    opx-sai-xpliant
+    opx-sai-vm
+    opx-nas-common
+    opx-nas-linux
+    opx-nas-ndi-api
+    opx-nas-ndi
+    opx-nas-acl
+    opx-nas-interface
+    opx-nas-l2
+    opx-nas-l3
+    opx-nas-qos
+    opx-nas-daemon
+    opx-platform-config
+    opx-sdi-api
+    opx-sdi-framework
+    opx-sdi-device-drivers
+    opx-sdi-sys
+    opx-sdi-sys-vm
+    opx-pas
+    opx-tmpctl
+    opx-core
+    )
 
 repos_as7512_32x=(
-	opx-logging
-	opx-common-utils
-	opx-cps
-	opx-base-model
-	opx-db-sql
-	opx-sai-api
-	opx-sai-xpliant
-	opx-nas-common
-	opx-nas-linux
-	opx-nas-ndi-api
-	opx-nas-ndi
-	opx-nas-acl
-	opx-nas-interface
-	opx-nas-l2
-	opx-nas-l3
-	opx-nas-qos
-	opx-nas-daemon
-	opx-platform-config
-	opx-sdi-api
-	opx-sdi-sys-vm
-	opx-pas
-	opx-tmpctl
-	opx-core
-	)
+    opx-logging
+    opx-common-utils
+    opx-cps
+    opx-base-model
+    opx-db-sql
+    opx-sai-api
+    opx-sai-xpliant
+    opx-nas-common
+    opx-nas-linux
+    opx-nas-ndi-api
+    opx-nas-ndi
+    opx-nas-acl
+    opx-nas-interface
+    opx-nas-l2
+    opx-nas-l3
+    opx-nas-qos
+    opx-nas-daemon
+    opx-platform-config
+    opx-sdi-api
+    opx-sdi-sys-vm
+    opx-pas
+    opx-tmpctl
+    opx-core
+    )
 
 if [ ! -z "$1" ] && [ "$1" != "all" ]; then
     if [ "$1" == "as7512" ]; then
@@ -93,20 +94,24 @@ trap "rm -rf ${GIT_PBUILDER_OUTPUT_DIR}" EXIT
 
 for r in ${repos[*]}; do
     if [ ! -d $r ]; then
-	    continue
+        continue
     fi
-
     (
-	cd $r
-	export CXXFLAGS="-g -ggdb -O0 "
-	export CPPFLAGS="-g -ggdb -O0 "
-	export CFLAGS="-g -ggdb -O0 "
-	gbp buildpackage --git-dist=$DIST --git-pbuilder --git-ignore-branch --git-ignore-new
+    cd $r
 
-	sudo cp ${GIT_PBUILDER_OUTPUT_DIR}/*.deb /var/cache/pbuilder/result
-	# cp ${GIT_PBUILDER_OUTPUT_DIR}/*.deb ..
+    if [[ $(grep override_dh_strip debian/rules | wc -l) != "1" ]]; then
+    	printf "override_dh_strip:\n" >> debian/rules
+    fi;
 
-	# clear output directory for next package
-	rm -rf ${GIT_PBUILDER_OUTPUT_DIR}/*
+    CPPFLAGS="-g -ggdb3 -O0" \
+    CXXFLAGS="-g -ggdb3 -O0" \
+    CFLAGS="-g -ggdb3 -O0" \
+    gbp buildpackage --git-dist=$DIST --git-pbuilder --git-ignore-branch --git-ignore-new
+
+    sudo cp ${GIT_PBUILDER_OUTPUT_DIR}/*.deb /var/cache/pbuilder/result
+    # cp ${GIT_PBUILDER_OUTPUT_DIR}/*.deb ..
+
+    # clear output directory for next package
+    rm -rf ${GIT_PBUILDER_OUTPUT_DIR}/*
     )
 done
