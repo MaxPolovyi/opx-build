@@ -23,34 +23,34 @@ DIST=$(lsb_release --codename --short)
 # 
 # TODO: read the debian/control files and compute the dependency graph.
 repos=( opx-logging
-	# opx-common-utils
-	# opx-cps
-	# opx-base-model
-	# opx-db-sql
-	# opx-sai-api
-	# opx-sai-common-utils
-	# opx-sai-common
-	# opx-sai-xpliant
-	# opx-sai-vm
-	# opx-nas-common
-	# opx-nas-linux
-	# opx-nas-ndi-api
-	# opx-nas-ndi
-	# opx-nas-acl
-	# opx-nas-interface
-	# opx-nas-l2
-	# opx-nas-l3
-	# opx-nas-qos
-	# opx-nas-daemon
-	# opx-platform-config
-	# opx-sdi-api
-	# opx-sdi-framework
-	# opx-sdi-device-drivers
-	# opx-sdi-sys
-	# opx-sdi-sys-vm
-	# opx-pas
-	# opx-tmpctl
-	# opx-core
+	opx-common-utils
+	opx-cps
+	opx-base-model
+	opx-db-sql
+	opx-sai-api
+	opx-sai-common-utils
+	opx-sai-common
+	opx-sai-xpliant
+	opx-sai-vm
+	opx-nas-common
+	opx-nas-linux
+	opx-nas-ndi-api
+	opx-nas-ndi
+	opx-nas-acl
+	opx-nas-interface
+	opx-nas-l2
+	opx-nas-l3
+	opx-nas-qos
+	opx-nas-daemon
+	opx-platform-config
+	opx-sdi-api
+	opx-sdi-framework
+	opx-sdi-device-drivers
+	opx-sdi-sys
+	opx-sdi-sys-vm
+	opx-pas
+	opx-tmpctl
+	opx-core
 	)
 
 repos_as7512_32x=(
